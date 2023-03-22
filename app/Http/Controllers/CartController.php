@@ -11,14 +11,11 @@ use App\Models\{
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Redis;
 use Cart as ShoppingcartCart;
 use Illuminate\Routing\Controller;
 use App\Repositories\Inforation\InforationRepository;
 use App\Repositories\Customer\CustomerRepository;
-use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
 {

@@ -3,15 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
-use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Redis;
-use App\Models\Brand;
-use App\Models\Shoping;
 use PDF;
 use Illuminate\Routing\Controller;
 
@@ -85,9 +79,9 @@ class HomeController extends Controller
         // $pdf->setPaper('A4', 'landscape');
         
         //Nếu muốn download file pdf
-       // return $pdf->download('myPDF.pdf');
+       return $pdf->download('myPDF.pdf');
         
         //Nếu muốn preview in pdf
-        return $pdf->stream('pdf',[$data,$sumPrice,$user]);
+        //return $pdf->stream('pdf',[$data,$sumPrice,$user]);
     }
 }

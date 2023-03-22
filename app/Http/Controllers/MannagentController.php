@@ -8,6 +8,7 @@ use App\Repositories\Cart\CartRepository;
 use App\Repositories\Shoping\ShopingRepository;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use PDF;
 
@@ -91,20 +92,15 @@ class MannagentController extends Controller
    public function order_details()
    {
           // $data = Cart::join('tbl_shopping', 'tbl_shopping.tbl_shopping_id')
-          $table2 = DB::table('tbl_cart')
-         ->rightJoin('tbl_shopping', 'tbl_shopping.id', '=', 'tbl_cart.shoping_id');
         
-          $table1 = DB::table('tbl_shopping')
-        ->leftJoin('tbl_cart', 'tbl_shopping.id', '=', 'tbl_cart.shoping_id')
-        ->unionAll($table2)
-        ->get();
         dd($table1);
    }
    
 
    public function pdf()
    {
-     $data = '';
+     $user = Auth::user() ;
+     dd($user);
 
      $pdf = PDF::loadView('pdf', compact('data'));
      
@@ -114,10 +110,10 @@ class MannagentController extends Controller
      // $pdf->setPaper('A4', 'landscape');
      
      //Nếu muốn download file pdf
-     return $pdf->download('myPDF.pdf')->with(['success' => 'Đã Tải Hóa Đơn Của Bạn']);
+     //return $pdf->download('myPDF.pdf');
      
      //Nếu muốn preview in pdf
-     //return $pdf->stream('pdf',[$data,$sumPrice,$user]);
+     return $pdf->stream('pdf',[$data,$sumPrice,$user]);
    }
 
 

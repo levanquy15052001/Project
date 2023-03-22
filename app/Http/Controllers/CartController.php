@@ -18,6 +18,8 @@ use Cart as ShoppingcartCart;
 use Illuminate\Routing\Controller;
 use App\Repositories\Inforation\InforationRepository;
 use App\Repositories\Customer\CustomerRepository;
+use Illuminate\Support\Facades\Session;
+
 class CartController extends Controller
 {
     
@@ -104,7 +106,7 @@ class CartController extends Controller
         return Redirect::back();
        }
     }
-    public function check_out()
+    public function check_out(Request $request)
     {
         $cart_item =  ShoppingcartCart::content();
         $Customer = $this->Customerrepository->with('user_has_information')->find(Auth::user()->id);
@@ -123,6 +125,12 @@ class CartController extends Controller
 
     public function save_check_out(Request $request)
     {
+        if($request->has('address')){
+
+            return redirect()->route('inforOrderNew');
+
+        }
+
         if(ShoppingcartCart::subtotal()!=0)
         {
             if($request->id_address==null)
@@ -177,5 +185,35 @@ class CartController extends Controller
         $CartShow = Shoping::with(['shoping_has_product','shoping_has_information'])
         ->get();
         return view('page.cart.payment',compact('CartShow'));
+    }
+
+    public function inforOrderNew()
+    {
+         return view('page.cart.inforOrderNew');
+    }
+
+    public function save_inforOrder(Request $request)
+    {
+        $rules =[
+            'email'=>'required|email',
+            'name'=>'required',
+            'phone'=>'required|numeric',
+            'address'=>'required',
+            'city'=>'required',
+            'district'=>'required',
+            'ward'=>'required',
+          ];
+        $request->validate($rules);
+        
+        $information = new Information();
+         $information->customer_id = Auth::user()->id;
+         $information->name = $request->name ;
+         $information->email = $request->email;
+         $information->phone = $request->phone;
+         $information->address = $request->address .' '. $request->ward .' '. $request->district .' '. $request->city ;
+         $information->note = $request->note ?? '';
+         $information->save();
+         
+         return redirect()->route('show_cart')->with(['success' => 'Thêm Thông Tin Thành Công']);
     }
 }

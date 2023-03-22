@@ -160,6 +160,7 @@
               </div>
             @endforeach
             <button type="submit" class=" btn btn-primary"> Gửi</button>
+            <button type="submit" class=" btn btn-primary" name="address"> Thêm Địa Chỉ Mới</button>
         </form>
         </div>
         @endif

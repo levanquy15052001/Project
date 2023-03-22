@@ -64,8 +64,16 @@ class HomeController extends Controller
                     ->join('tbl_product','tbl_product.product_id', '=', 'tbl_shopping.product_id')
                     ->join('tbl_information', 'tbl_information.id', '=', 'tbl_shopping.id_information')
                     ->where('tbl_shopping.customer_id',$user->id)
-                    ->select('tbl_cart.price as tbl_cart_price','tbl_shopping.qty','tbl_product.product_name','tbl_product.product_img')
+                    ->select('tbl_cart.price as tbl_cart_price',
+                            'tbl_shopping.qty','tbl_shopping.id_information',
+                            'tbl_product.product_name','tbl_product.product_img',
+                             'tbl_information.address as information_address',
+                             'tbl_information.phone as phone',
+                             'tbl_information.note as note',
+                             
+                            )
                     ->get();
+      
         $sumPrice = 0 ;
             for($i = 0;  $i<count($data); $i ++ )
             {
@@ -73,16 +81,13 @@ class HomeController extends Controller
             }
 
         $pdf = PDF::loadView('pdf', compact('data','sumPrice','user'));
-   
-       
-        // dd($data);
         //Nếu muốn hiển thị file pdf theo chiều ngang
         // $pdf->setPaper('A4', 'landscape');
         
         //Nếu muốn download file pdf
-        return $pdf->download('myPDF.pdf');
+       // return $pdf->download('myPDF.pdf');
         
         //Nếu muốn preview in pdf
-        //return $pdf->stream('pdf',[$data,$sumPrice,$user]);
+        return $pdf->stream('pdf',[$data,$sumPrice,$user]);
     }
 }

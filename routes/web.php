@@ -49,6 +49,8 @@ Route::middleware('User')->group(function(){
     Route::post('/add_cart',[CartController::class,'add_cart'])->name('add_cart');
     Route::get('Cart-update',[CartController::class,'updatecart'])->name('cart.updatecart');
     Route::get('Check-out',[CartController::class,'check_out'])->name('check_out');
+    Route::get('Infor-Order-New',[CartController::class,'inforOrderNew'])->name('inforOrderNew');
+    Route::post('save_inforOrder',[CartController::class,'save_inforOrder'])->name('save_inforOrder');
     Route::post('Check-out',[CartController::class,'save_check_out'])->name('save_check_out');
     Route::get('payment',[CartController::class,'payment'])->name('payment');
     Route::get('/pdf_user',[HomeController::class,'pdf_user'])->name('pdf_user');

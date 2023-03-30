@@ -27,7 +27,7 @@ class HomeController extends Controller
                 ->paginate(3);
                 break;
             default:
-                $Product = Product::where('del_flag',0)->paginate(3);
+                $Product = Product::where('del_flag',0)->paginate(12);
         }
         return view('page.trang_chu',compact('Product'));
     }
@@ -84,4 +84,5 @@ class HomeController extends Controller
         //Nếu muốn preview in pdf
         //return $pdf->stream('pdf',[$data,$sumPrice,$user]);
     }
+
 }

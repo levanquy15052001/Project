@@ -104,31 +104,7 @@
                         <!-- Area Chart -->
                         <div class="col-xl-8 col-lg-7">
                             <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
-                                    <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                            aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-header">Dropdown Header:</div>
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Something else here</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Card Body -->
-                                <div class="card-body">
-                                    <div class="chart-area">
-                                        <canvas id="myAreaChart"></canvas>
-                                    </div>
-                                </div>
+                                <div id="chartContainer" class="card shadow mb-4"></div>
                             </div>
                         </div>
 
@@ -157,7 +133,9 @@
                                 <!-- Card Body -->
                                 <div class="card-body">
                                     <div class="chart-pie pt-4 pb-2">
-                                        <canvas id="myPieChart"></canvas>
+                                        <canvas id="myPieChart">
+
+                                        </canvas>
                                     </div>
                                     <div class="mt-4 text-center small">
                                         <span class="mr-2">
@@ -184,43 +162,36 @@
                             <!-- Project Card Example -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Projects</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Thống kê sản phẩm</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Tổng : {{$sumProduct}} Đơn hàng</h6>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="small font-weight-bold">Server Migration <span
-                                            class="float-right">20%</span></h4>
-                                    <div class="progress mb-4">
-                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 20%"
+                                    @foreach ($dataProduct as $item)
+                                    <a href="{{route('show_detail',['id'=>$item->product_id])}}" class="nav-link"> 
+                                        <h4 class="small font-weight-bold">{{$item->product_name}} <span
+                                            class="float-right">{{round($item->tile,1)}}% ({{$item->count}})</span></h4>
+                                         <div class="progress mb-4">
+                                        <div class="progress-bar 
+                                        @if ($item->tile >= 90  )
+                                             bg-info     
+                                        @elseif($item->tile >= 40 && $item->tile < 90)
+                                             bg-warning
+                                        @elseif($item->tile >= 20 && $item->tile < 40)
+                                             bg-info
+                                        @elseif($item->tile >= 10 && $item->tile < 20)
+                                              bg-success
+                                        @else
+                                             bg-danger
+                                        @endif
+                                        " role="progressbar" style="width: {{round($item->tile,1)}}%" 
                                             aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <h4 class="small font-weight-bold">Sales Tracking <span
-                                            class="float-right">40%</span></h4>
-                                    <div class="progress mb-4">
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 40%"
-                                            aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <h4 class="small font-weight-bold">Customer Database <span
-                                            class="float-right">60%</span></h4>
-                                    <div class="progress mb-4">
-                                        <div class="progress-bar" role="progressbar" style="width: 60%"
-                                            aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <h4 class="small font-weight-bold">Payout Details <span
-                                            class="float-right">80%</span></h4>
-                                    <div class="progress mb-4">
-                                        <div class="progress-bar bg-info" role="progressbar" style="width: 80%"
-                                            aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <h4 class="small font-weight-bold">Account Setup <span
-                                            class="float-right">Complete!</span></h4>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 100%"
-                                            aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
+                                          </div>
+                                        </a>
+                                    @endforeach
+                                    
                                 </div>
                             </div>
-
-                            <!-- Color System -->
+                 <!-- Color System -->
                             <div class="row">
                                 <div class="col-lg-6 mb-4">
                                     <div class="card bg-primary text-white shadow">
@@ -334,3 +305,42 @@
             </div>
             <!-- End of Main Content -->
             @endsection
+
+        @push('script')
+            <script src="{{asset('js/canvasjs.min.js')}}"></script>
+
+            <script>
+                window.onload = function() {
+                var data = <?php echo json_encode($dataCategory); ?>;
+                var manhinh= 50.5;
+                var tainghe = 20.8;
+                var laptop = 10.5;
+                var nguon =18.2;
+                var chart = new CanvasJS.Chart("chartContainer", {
+                    theme: "light2", // "light1", "light2", "dark1", "dark2"
+                    exportEnabled: true,
+                    animationEnabled: true,
+                    title: {
+                        text: "Thống Kê Theo Danh Mục Sản Phẩm"
+                    },
+                    data: [{
+                        type: "pie",
+                        startAngle: 25,
+                        toolTipContent: "<b>{label}</b>: {y}%",
+                        showInLegend: false,
+                        legendText: "{label}",
+                        indexLabelFontSize: 16,
+                        indexLabel: "{label} - {y}%",
+                        dataPoints: [
+                            { y: data[0]['tile'], label: data[0]['category_name'] },
+                            { y: data[1]['tile'], label: data[1]['category_name'] },
+                            { y: data[2]['tile'], label: data[2]['category_name'] },
+                            { y: data[3]['tile'], label: data[3]['category_name'] },
+                        ]
+                    }]
+                });
+                chart.render();
+                
+                }
+                </script>
+        @endpush

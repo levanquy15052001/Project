@@ -178,9 +178,11 @@ class CartController extends Controller
     }
 
     public function payment()
-    {
+    {   
+        $user = Auth()->user();
         $CartShow = Shoping::with(['shoping_has_product','shoping_has_information'])
-        ->get();
+                        ->where('customer_id',$user->id)
+                        ->get();
         return view('page.cart.payment',compact('CartShow'));
     }
 

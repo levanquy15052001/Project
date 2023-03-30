@@ -31,14 +31,6 @@
             @enderror
           </div>
           <div class="form-group">
-            <label for="name" class="col-sm-3 control-label">Ngày Tạo</label>
-            <div class="col-sm-9">
-              <input type="text" class="form-control" name="datecreate"  id="datecreate" value="{{old('datecreate')}}">
-              @error('datecreate')
-              <div class="text-danger">{{ $message }}</div>
-              @enderror
-            </div>
-          <div class="form-group">
             <label for="name" class="col-sm-3 control-label">Hình Chính Của Ảnh Sản Phẩm</label>
             <div class="col-sm-9">
               <input type="file" class="form-control" name="product_img" id="product_img">

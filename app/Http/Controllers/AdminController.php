@@ -30,8 +30,9 @@ class AdminController extends Controller
                 $dataProduct[$key]['tile'] = $tile;
                 
             }
-    
+
         $dataCategory = Category::select('category_id','category_name')->where('del_flag',0)->get();
+
         $sumDataCategory = count($dataCategory);
 
         $chartDataCategory =  Cart::join('tbl_shopping','tbl_shopping.id', '=','tbl_cart.shoping_id')
@@ -53,16 +54,20 @@ class AdminController extends Controller
                     } 
                 } 
             }
-            foreach($dataCategory as $key => $items)
+           //$dataCategory =  $dataCategory->toArray();
+            $dataCanvas = $dataCategory;
+        
+            for($i =0 ; $i < count($dataCanvas);  $i ++)
             {
-                 $tile = $items->sum  * 100 /$sumDataCategory  ;
-                 $dataCategory[$key]['tile'] = $tile;
-                 
-            }       
+              
+                $ratio =  $dataCanvas[$i]['sum'] * 100 /$sumProduct  ;
+                $dataCanvas[$i]['ratio'] = number_format($ratio,2);
+            }
+
         return view('admin.Admin',compact(
                                         'sumProduct',
                                         'dataProduct', 
-                                        'dataCategory'              
+                                        'dataCanvas'              
                                     ));
     }
 
@@ -112,13 +117,15 @@ class AdminController extends Controller
         
         $request->validate([
             'name' => 'required',
+            'phone' => 'required|numeric',
             'email' => 'required|email|unique:users,email',
             'password' => 'required',
             'confipassword' => 'required|same:password',
-            'phone' => 'required|numeric',
+            
         ]);
         $data = array();
         $data['name']= $request->name;
+        $data['phone']= $request->phone;
         $data['email']= $request->email;
         $data['password']=  bcrypt($request->password);
         $data['admin_flag']= 0;

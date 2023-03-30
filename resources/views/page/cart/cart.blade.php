@@ -104,9 +104,9 @@
         <div class="col-sm-6 information">
                 <p>Thông tin đặt hàng</p>
                         <div class="form-one">
-                            <form action="{{route('check_out')}}" method="POST" >
+                            <form action="{{route('save_check_out')}}" method="POST" >
                                 @csrf
-                                <input type="text" placeholder="Email" name="email" value="{{old('email')}}">
+                                <input type="text" placeholder="Email" name="email" value="{{old('email')}}">   
                                 @if($errors->has('email'))
                                     <div class="text-danger" >{{ $errors->first('email') }}</div>
                                 @endif

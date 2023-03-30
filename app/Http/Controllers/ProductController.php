@@ -36,12 +36,8 @@ class ProductController extends Controller
                 'product_brand'=>'required',
                
                 'product_img' => 'required|mimes:jpg,jpeg,png,gif',
-                // 'product_img1' => 'required|mimes:jpg,jpeg,png,gif',
-                // 'product_img2' => 'required|mimes:jpg,jpeg,png,gif',
-                // 'product_img3' => 'required|mimes:jpg,jpeg,png,gif',
               ];
               $request->validate($rules);
-              dd('ok');
             //Lưu hình ảnh vào thư mục Eshopper\images\product-details
 
             $product_img = $request->product_img;

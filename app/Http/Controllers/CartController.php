@@ -37,15 +37,6 @@ class CartController extends Controller
         $sum = 0;
         if(Auth::check() && Auth::user()->admin_flag==0)
         {
-            // $cart = Cart::where('tbl_cart.id_customer',Auth::user()->id)
-            //         ->join('tbl_product','tbl_cart.id_product', '=','tbl_product.product_id')
-            //         ->select('tbl_cart.*','tbl_product.product_name','tbl_product.product_img','tbl_product.product_price')
-            //         ->get();
-            // for($i=0; $i<count($cart);$i++)
-            // {
-            //     $sum  =  $sum  +  ($cart[$i]->amount * $cart[$i]->product_price);
-            // }
-
             $cart_item =  ShoppingcartCart::content();
             $Customer = $this->Customerrepository->with('user_has_information')->find(Auth::user()->id);
             return view('page.cart.cart',compact('cart_item','sum','Customer'));
@@ -127,9 +118,33 @@ class CartController extends Controller
             return redirect()->route('inforOrderNew');
 
         }
+       
+        elseif($request->has('id_address')==null)
+        {
+            $rules =[
+                'email'=>'required|email',
+                'name'=>'required',
+                'phone'=>'required|numeric',
+                'address'=>'required',
+                'city'=>'required',
+                'district'=>'required',
+                'ward'=>'required',
+              ];
+            
+            $request->validate($rules);
+            $information = new Information();
+             $information->customer_id = Auth::user()->id;
+             $information->name = $request->name ;
+             $information->email = $request->email;
+             $information->phone = $request->phone;
+             $information->address = $request->address.' '. $request->ward .' '. $request->district .' '. $request->city ;
+             $information->note = $request->note ?? '';
+             $information->save();
+        }
 
         if(ShoppingcartCart::subtotal()!=0)
         {
+           
             if($request->id_address==null)
             {
                 $rules =[

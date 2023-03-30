@@ -22,18 +22,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-// Route::get('Logout',[AdminController::class,'Logout'])->name('admin.logout');
-// Route::post('Login',[AdminController::class,'Post_Login'])->name('admin.pots_login');
-// Route::get('Register',[AdminController::class,'Register'])->name('admin.register');
-// Route::get('Login',[AdminController::class,'Login'])->name('admin.login');
-// Route::get('Logout',[AdminController::class,'Logout'])->name('admin.logout');
-
-
-//         Route::get('Admin',[AdminController::class,'index'])->name('admin.index');
-//         Route::get('Login',[AdminController::class,'Login'])->name('admin.login');
-//         Route::get('Logout',[AdminController::class,'Logout'])->name('admin.logout');
-
 Route::get('/',[HomeController::class,'index']);
 Route::get('/Trang-chu',[HomeController::class,'index'])->name('index');
 Route::get('Logout',[AdminController::class,'Logout'])->name('admin.logout');

@@ -165,6 +165,8 @@
 <script src="{{asset('Eshopper/js/jquery.prettyPhoto.js')}}"></script>
 <script src="{{asset('Eshopper/js/main.js')}}"></script>
 <script src="{{asset('Eshopper/ckeditor5-build-classic/ckeditor.js')}}"></script>
+<script src="{{asset('js/sweetalert.min.js')}}"></script>
+
 @stack('script')
 </body>
 </html>

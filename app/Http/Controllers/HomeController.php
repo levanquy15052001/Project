@@ -7,7 +7,9 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use PDF;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Redirect;
 
 class HomeController extends Controller
 {
@@ -83,6 +85,22 @@ class HomeController extends Controller
         
         //Nếu muốn preview in pdf
         //return $pdf->stream('pdf',[$data,$sumPrice,$user]);
+    }
+
+    public function send_mail()
+    {
+        $to_name = "LeBaoQuy";
+        $to_email = ["ng.khang389@gmail.com","levanquy"];//send to this email
+
+        $data = array("name"=>"noi dung ten","body"=>"noi dung body"); //body of mail.blade.php
+    
+        Mail::send('send_mail',$data,function($message) use ($to_name,$to_email){
+            $message->to($to_email)->subject('test mail nhé');//send this mail with subject
+            $message->from($to_email,$to_name);//send from this mail
+        });
+        //--send mail
+        return Redirect::back();
+
     }
 
 }

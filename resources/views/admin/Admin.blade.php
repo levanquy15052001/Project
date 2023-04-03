@@ -311,11 +311,8 @@
 
             <script>
                 window.onload = function() {
-                var data = <?php echo json_encode($dataCategory); ?>;
-                var manhinh= 50.5;
-                var tainghe = 20.8;
-                var laptop = 10.5;
-                var nguon =18.2;
+                var data = <?php echo json_encode($dataCanvas); ?>;
+                console.log(data)
                 var chart = new CanvasJS.Chart("chartContainer", {
                     theme: "light2", // "light1", "light2", "dark1", "dark2"
                     exportEnabled: true,
@@ -332,10 +329,10 @@
                         indexLabelFontSize: 16,
                         indexLabel: "{label} - {y}%",
                         dataPoints: [
-                            { y: data[0]['tile'], label: data[0]['category_name'] },
-                            { y: data[1]['tile'], label: data[1]['category_name'] },
-                            { y: data[2]['tile'], label: data[2]['category_name'] },
-                            { y: data[3]['tile'], label: data[3]['category_name'] },
+                            { y: data[0]['ratio'], label: data[0]['category_name'] },
+                            { y: data[1]['ratio'], label: data[1]['category_name'] },
+                            { y: data[2]['ratio'], label: data[2]['category_name'] },
+                            { y: data[3]['ratio'], label: data[3]['category_name'] },
                         ]
                     }]
                 });

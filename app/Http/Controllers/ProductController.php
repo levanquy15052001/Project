@@ -36,12 +36,8 @@ class ProductController extends Controller
                 'product_brand'=>'required',
                
                 'product_img' => 'required|mimes:jpg,jpeg,png,gif',
-                // 'product_img1' => 'required|mimes:jpg,jpeg,png,gif',
-                // 'product_img2' => 'required|mimes:jpg,jpeg,png,gif',
-                // 'product_img3' => 'required|mimes:jpg,jpeg,png,gif',
               ];
               $request->validate($rules);
-              dd('ok');
             //Lưu hình ảnh vào thư mục Eshopper\images\product-details
 
             $product_img = $request->product_img;
@@ -118,17 +114,6 @@ class ProductController extends Controller
         
       
     }
-
-    // public function Search_product(Request $request)
-    // {
-    //       $brand =DB::table('tbl_brand_product')
-    //       ->where('del_flag',0)
-    //       ->get();
-    //       $categoty =DB::table('tbl_category_product')
-    //             ->where('del_flag',0)
-    //             ->get();
-    //      dd($request->brand_srearch);
-    // }
 
     public function Custom($id,$custome)
     {

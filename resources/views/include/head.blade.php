@@ -13,6 +13,7 @@
     <link href="{{asset('Eshopper/css/animate.css')}}" rel="stylesheet">
 	<link href="{{asset('Eshopper/css/main.css')}}" rel="stylesheet">
 	<link href="{{asset('Eshopper/css/responsive.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="{{asset('css/sweetalert.css')}}">
     <link rel="stylesheet" href="{{asset('css/toasts.css')}}">
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>

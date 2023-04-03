@@ -7,6 +7,7 @@ use App\Models\{
     Product,
     Shoping,
     Cart,
+    Order,
 };
 
 use Illuminate\Http\Request;
@@ -229,5 +230,26 @@ class CartController extends Controller
          $information->save();
          
          return redirect()->route('show_cart')->with(['success' => 'Thêm Thông Tin Thành Công']);
+    }
+
+    public function show_cart_ajax()
+    {
+        $order = Order::where('customers_id',Auth::user()->id)
+                        ->join('tbl_product', 'tbl_product.product_id','=','tbl_order.product_id')
+                        ->select(
+                                'tbl_order.qty as qty',
+                                'tbl_product.product_name as product_name',
+                                'tbl_product.product_price as product_price',
+                                'tbl_product.product_img as product_img'
+                                )
+                        ->get();
+        $sumOrder = 0;
+                            
+        for($i = 0 ; $i < count($order); $i++ )
+        {
+            $sumOrder  += $order[$i]->product_price * $order[$i]->qty;
+        }
+
+        return view('page.cart.cartAjax',compact('order','sumOrder'));
     }
 }

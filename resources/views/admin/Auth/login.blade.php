@@ -16,13 +16,16 @@
                     <input type="text" placeholder="Email address or phone number" name="email">
                     <input type="password" placeholder="Password"  name="password">
                     <button type="submit" class="btn-login">Login</button>
+
                     @if($errors->any())
                     <h4 class="red">{{$errors->first()}}</h4>
                     @endif
+                  </form>
                     <a href="{{route('user.Register')}}" class="btn-new">Create new Account</a>
+                    <a href="{{ url('/auth/redirect/facebook') }}" class="btn-login">Facebook</a>
                 </div>
-              </form>
                 <p><a href="#"><b>Create a Page</b></a> for a celebrity, brand or business.</p>
+               
             </div>
         </div>
     </main>
@@ -30,5 +33,22 @@
   @endsection
 
 @push('script')
+  
        <!-- Custom script for this template-->
+       {{-- <script src="https://www.google.com/recaptcha/enterprise.js?render=6Le7_EwlAAAAAFfzY7TMKbRz_b66_tvtPrtxOBsF"></script>
+       <script src="{{asset('js/jqueryajax.min.js')}}"></script>
+       <script type="text/javascript">
+         var input = document.getElementById('reload');
+              input.onclick = function(){
+                  $.ajax({
+                      type: 'GET',
+                      url: '{{route("reload_captcha")}}',
+                      success: function (data) {
+                        console.log('ok')
+                          $(".captcha span").html(data.captcha);
+                      }
+                  }); 
+              };
+      
+        </script> --}}
 @endpush

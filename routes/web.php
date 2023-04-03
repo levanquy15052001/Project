@@ -3,9 +3,11 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BrandProductControler;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\CategoryProductControler;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LoginFacebookController;
 use App\Http\Controllers\MannagentController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Redirect;
@@ -22,6 +24,16 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+//Login facebook
+Route::get('/auth/redirect/{provider}', [LoginFacebookController::class,'redirect'])->name('redirect');
+Route::get('/callback/{provider}',[LoginFacebookController::class,'callback'])->name('callback');
+Route::get('/google/callback',[LoginFacebookController::class,'google_callback'])->name('google.callback');
+//Captcha
+Route::get('/contact-form', [CaptchaServiceController::class, 'index']);
+Route::post('/captcha-validation', [CaptchaServiceController::class, 'capthcaFormValidate']);
+Route::get('/reload-captcha', [CaptchaServiceController::class, 'reloadCaptcha'])->name('reload_captcha');
+
+
 Route::get('/',[HomeController::class,'index']);
 Route::get('/Trang-chu',[HomeController::class,'index'])->name('index');
 Route::get('Logout',[AdminController::class,'Logout'])->name('admin.logout');
@@ -30,6 +42,8 @@ Route::get('Register',[AdminController::class,'Register'])->name('user.Register'
 Route::post('Register',[AdminController::class,'CheckRegister'])->name('userCheck.Register');
 Route::post('Login',[AdminController::class,'Check_Login'])->name('admin.check_login');
 Route::get('/show_detail',[HomeController::class,'show_detail'])->name('show_detail');
+Route::get('/send-mail',[HomeController::class,'send_mail'])->name('send_mail');
+Route::post('/ajax-add-cart',[AjaxController::class,'ajax_add_cart'])->name('ajax_add_cart');
 
 //cart
 Route::middleware('User')->group(function(){
@@ -42,6 +56,8 @@ Route::middleware('User')->group(function(){
     Route::post('Check-out',[CartController::class,'save_check_out'])->name('save_check_out');
     Route::get('payment',[CartController::class,'payment'])->name('payment');
     Route::get('/pdf_user',[HomeController::class,'pdf_user'])->name('pdf_user');
+    Route::get('/show_cart_ajax',[CartController::class,'show_cart_ajax'])->name('show_cart_ajax');
+
 
 });
 

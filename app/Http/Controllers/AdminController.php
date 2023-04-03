@@ -59,7 +59,6 @@ class AdminController extends Controller
         
             for($i =0 ; $i < count($dataCanvas);  $i ++)
             {
-              
                 $ratio =  $dataCanvas[$i]['sum'] * 100 /$sumProduct  ;
                 $dataCanvas[$i]['ratio'] = number_format($ratio,2);
             }
@@ -82,6 +81,7 @@ class AdminController extends Controller
         $request->validate([
             'email' => 'required',
             'password' => 'required',
+            // 'captcha' => 'required|captcha'
         ]);
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {

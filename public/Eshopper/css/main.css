@@ -1610,7 +1610,12 @@ h2.title {
   display: block;
 
 }
-
+#cart_items .cart_info .cart_description .cart_name_product_ajax {
+    width: 250px;
+    overflow: hidden;
+    white-space: nowrap; 
+    text-overflow: ellipsis;
+}
 #cart_items .cart_info .cart_description p {
   color:#696763
 }

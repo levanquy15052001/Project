@@ -68,6 +68,7 @@
                             <li><a href="{{route('payment')}}"><i class="fa fa-crosshairs"></i> Payment</a></li>
                             <li><a href="{{route('check_out')}}"><i class="fa fa-crosshairs"></i> Checkout</a></li>
                             <li><a href="{{route('show_cart')}}"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+                            <li><a href="{{route('show_cart_ajax')}}"><i class="fa fa-shopping-cart"></i> CartAjax</a></li>
                            
                                 @if(Auth::check() &&(Auth::user()->admin_flag==0))
                                 <li>
